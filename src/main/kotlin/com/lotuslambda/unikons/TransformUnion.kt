@@ -1,3 +1,5 @@
+package com.lotuslambda.unikons
+
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 import javax.annotation.processing.Filer
@@ -27,19 +29,21 @@ class TransformUnion(private val dirToWrite: Filer) {
     }
 
     //current annotation -> element and package
-    operator fun invoke(element: Element, packageOf: String) {
+    operator fun invoke(element: Element, packageOf: String) : FileSpec{
         val union = element.getAnnotation(Union::class.java)
         val unionName = "${element.simpleName}Union"
         val unionClassName = ClassName(packageOf, unionName)
         val generic = TypeVariableName("UnionedType")
-        val file = FileSpec.builder("", unionName)
+        return FileSpec.builder("", unionName)
             .addType(
                 TypeSpec.classBuilder(unionClassName)
                     .addTypeVariable(generic)
                     .primaryConstructor(
                         FunSpec.constructorBuilder().addParameter(VALUE, generic).build()
                     ).addModifiers(KModifier.SEALED)
-                    .addProperty(PropertySpec.builder(VALUE, generic).initializer(VALUE).build())
+                    .addProperty(PropertySpec.builder(VALUE, generic).initializer(
+                        VALUE
+                    ).build())
                     .apply {
                         //way to access elements of annotation if they're a Class/K<Class>
                         val typesInUnion: List<TypeMirror> = try {
@@ -70,9 +74,7 @@ class TransformUnion(private val dirToWrite: Filer) {
                         addType(companionObject.build())
                     }.build()
 
-            )
-        println(file.toString())
-        file.build().writeTo(dirToWrite)
+            ).build()
     }
 
     private fun subclassBuilderFor(

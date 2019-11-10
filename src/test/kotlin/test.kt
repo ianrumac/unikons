@@ -1,16 +1,13 @@
+import com.lotuslambda.unikons.UnionProcessor
 import com.tschuchort.compiletesting.KotlinCompilation
 import com.tschuchort.compiletesting.SourceFile
 
 data class Bar(val baz: String)
 
-@Union([String::class, Bar::class, Double::class])
-class Foo
-
-
-@org.junit.Test
 fun main() {
     val kotlinSource = SourceFile.kotlin(
         "KClass.kt", """
+            import com.lotuslambda.unikons.Union
         data class Bar(val baz: String)
 
 @Union([String::class,Bar::class,Double::class])
@@ -30,6 +27,8 @@ class Foo
     }.compile()
 }
 
+
+//Sample output
 sealed class FooUnion<UnionedType>(
     val value: UnionedType
 ) {

@@ -1,12 +1,15 @@
+package com.lotuslambda.unikons
+
 import com.google.auto.service.AutoService
+import com.squareup.kotlinpoet.FileSpec
+import java.io.File
 import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
-import javax.tools.Diagnostic
 
-@AutoService(Processor::class) // For registering the service
-@SupportedSourceVersion(SourceVersion.RELEASE_8) // to support Java 8
+@AutoService(Process::class)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(UnionProcessor.KAPT_KOTLIN_GENERATED_OPTION_NAME)
 class UnionProcessor : AbstractProcessor() {
 
@@ -16,22 +19,25 @@ class UnionProcessor : AbstractProcessor() {
 
     override fun getSupportedSourceVersion(): SourceVersion = SourceVersion.latest()
 
-    override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(Union::class.simpleName!!)
+    override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(Union::class.java.name)
 
     override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment): Boolean {
         val transformer = TransformUnion(processingEnv.filer)
-
-        roundEnv.getElementsAnnotatedWith(Union::class.java).forEach { methodElement ->
-            if (methodElement.kind != ElementKind.CLASS) {
-                processingEnv.messager.printMessage(
-                    Diagnostic.Kind.ERROR,
-                    "Can only be applied to classes, element: $methodElement "
-                )
-                return false
-            }
+        val path = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
+        roundEnv.getElementsAnnotatedWith(Union::class.java).filter {
+            it.kind == ElementKind.CLASS
+        }.map {methodElement ->
             transformer(methodElement, processingEnv.elementUtils.getPackageOf(methodElement).qualifiedName.toString())
-
+        }.forEach {
+            writeToFile(it,path!!)
         }
-        return true;
+        return true
+    }
+
+    private fun writeToFile(file: FileSpec, path: String){
+        val writeTo = File(path,"${file.name}.kt").apply {
+            parentFile.mkdir()
+        }
+        file.writeTo(writeTo)
     }
 }
