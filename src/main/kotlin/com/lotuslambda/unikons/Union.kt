@@ -1,3 +1,5 @@
+package com.lotuslambda.unikons
+
 import kotlin.reflect.KClass
 
 @Retention(AnnotationRetention.RUNTIME)

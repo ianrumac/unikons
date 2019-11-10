@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.tester.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.test.iml" />
