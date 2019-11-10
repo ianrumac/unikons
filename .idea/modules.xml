@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.main.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.test.iml" filepath="$PROJECT_DIR$/.idea/modules/lotus.lambda.unikons.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/unikons_test/unikons.unikons_test.iml" filepath="$PROJECT_DIR$/.idea/modules/unikons_test/unikons.unikons_test.iml" />
+    </modules>
+  </component>
+</project>
