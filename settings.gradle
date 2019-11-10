@@ -1,0 +1,3 @@
+rootProject.name = 'unikons'
+include 'unikons_test'
+
