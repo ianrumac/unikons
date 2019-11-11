@@ -23,7 +23,7 @@ import javax.lang.model.type.TypeMirror
 * Getting a value from the union is as simple as calling unionInstance.value
 * */
 
-class TransformUnion(private val dirToWrite: Filer) {
+class TransformUnion {
     companion object {
         private const val VALUE = "value"
     }

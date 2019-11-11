@@ -22,7 +22,7 @@ class UnionProcessor : AbstractProcessor() {
     override fun getSupportedAnnotationTypes(): MutableSet<String> = mutableSetOf(Union::class.java.name)
 
     override fun process(annotations: MutableSet<out TypeElement>?, roundEnv: RoundEnvironment): Boolean {
-        val transformer = TransformUnion(processingEnv.filer)
+        val transformer = TransformUnion()
         val path = processingEnv.options[KAPT_KOTLIN_GENERATED_OPTION_NAME]
         roundEnv.getElementsAnnotatedWith(Union::class.java).filter {
             it.kind == ElementKind.CLASS
