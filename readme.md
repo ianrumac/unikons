@@ -40,7 +40,8 @@ Getting a value from the union is as simple as calling `.value`
 
 Usage:
 ```groovy
-    implementation 'com.github.lotuslambda:master-SNAPSHOT'
-    kapt 'com.github.lotuslambda:unikons:master-SNAPSHOT'
+    implementation 'com.github.lotuslambda:0.1-alpha'
+    annotationProcessor 'com.github.lotuslambda:unikons:0.1-alpha'
+    kapt 'com.github.lotuslambda:unikons:0.1-alpha'
 
 ```
