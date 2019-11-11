@@ -12,7 +12,7 @@ I love Kotlin, but it lacks unions.
  Example:
 
 ```kotlin 
-@Union([String::class,Bar::class,Double::class)
+@Union(String::class,Bar::class,Double::class)
 class Foo
 ```
 Creates a:
@@ -42,8 +42,8 @@ Getting a value from the union is as simple as calling `.value`
 Installing:
 
 ```groovy
-    implementation 'com.github.lotuslambda:0.1-alpha'
-    annotationProcessor 'com.github.lotuslambda:unikons:0.1-alpha'
-    kapt 'com.github.lotuslambda:unikons:0.1-alpha'
+    implementation 'com.github.lotuslambda:0.2.1-alpha'
+    annotationProcessor 'com.github.lotuslambda:unikons:0.2.1-alpha'
+    kapt 'com.github.lotuslambda:unikons:0.2.1-alpha'
 
 ```

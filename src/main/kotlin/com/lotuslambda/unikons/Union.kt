@@ -4,4 +4,4 @@ import kotlin.reflect.KClass
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
-annotation class Union(val types: Array<KClass<*>>)
+annotation class Union(vararg val types: KClass<*>)
