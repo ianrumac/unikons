@@ -8,9 +8,9 @@ import javax.lang.model.SourceVersion
 import javax.lang.model.element.ElementKind
 import javax.lang.model.element.TypeElement
 
-@AutoService(Process::class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedOptions(UnionProcessor.KAPT_KOTLIN_GENERATED_OPTION_NAME)
+@AutoService(Process::class)
 class UnionProcessor : AbstractProcessor() {
 
     companion object {
