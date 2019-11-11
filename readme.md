@@ -1,4 +1,8 @@
- I love Kotlin, but it lacks unions. 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+ 
+
+I love Kotlin, but it lacks unions. 
  
  This annotation processor takes a class annotated with @Union and returns a sealed class
  wrapper around it pretending to be an union
