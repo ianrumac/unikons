@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![](https://jitpack.io/v/lotuslambda/unikons.svg)](https://jitpack.io/#lotuslambda/unikons/0.1-alpha)
+[![](https://jitpack.io/v/lotuslambda/unikons.svg)](https://jitpack.io/#lotuslambda/unikons/0.2.1-alpha)
 
  
 
