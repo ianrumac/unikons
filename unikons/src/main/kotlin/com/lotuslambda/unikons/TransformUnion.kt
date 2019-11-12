@@ -2,7 +2,6 @@ package com.lotuslambda.unikons
 
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import javax.annotation.processing.Filer
 import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypesException
 import javax.lang.model.type.TypeMirror
@@ -29,21 +28,25 @@ class TransformUnion {
     }
 
     //current annotation -> element and package
-    operator fun invoke(element: Element, packageOf: String) : FileSpec{
+    operator fun invoke(element: Element, packageOf: String): FileSpec {
         val union = element.getAnnotation(Union::class.java)
         val unionName = "${element.simpleName}Union"
         val unionClassName = ClassName(packageOf, unionName)
         val generic = TypeVariableName("UnionedType")
-        return FileSpec.builder("", unionName)
+        return FileSpec.builder(packageOf, unionName)
             .addType(
                 TypeSpec.classBuilder(unionClassName)
                     .addTypeVariable(generic)
                     .primaryConstructor(
-                        FunSpec.constructorBuilder().addParameter(VALUE, generic).build()
+                        FunSpec.constructorBuilder()
+                            .addParameter(VALUE, generic)
+                            .build()
                     ).addModifiers(KModifier.SEALED)
-                    .addProperty(PropertySpec.builder(VALUE, generic).initializer(
-                        VALUE
-                    ).build())
+                    .addProperty(
+                        PropertySpec.builder(VALUE, generic)
+                            .initializer(VALUE)
+                            .build()
+                    )
                     .apply {
                         //way to access elements of annotation if they're a Class/K<Class>
                         val typesInUnion: List<TypeMirror> = try {
@@ -55,20 +58,26 @@ class TransformUnion {
                         //holds creation methods
                         val companionObject = TypeSpec.companionObjectBuilder()
                         //create subclasses for each type
-                        typesInUnion.map {
-                            val currentClass = ClassName.bestGuess(it.asTypeName().toString())
+                        typesInUnion.map { typeMirror ->
+                            val currentClass = ClassName.bestGuess(typeMirror.asTypeName().toString())
                             val name = currentClass.simpleName
                             val classForTypeName = "$name$unionName"
                             val componentMethod = companionMethodBuilderFor(
-                                it.asTypeName(), name, classForTypeName, unionName
+                                type = typeMirror.asTypeName(),
+                                typeName = name,
+                                className = classForTypeName,
+                                unionName = unionName
                             ).build()
                             val generatedSubclass = subclassBuilderFor(
-                                classForTypeName, it, unionClassName, currentClass
+                                classForTypeName = classForTypeName,
+                                typeMirror = typeMirror,
+                                unionClassName = unionClassName,
+                                currentClass = currentClass
                             ).build()
                             Pair(generatedSubclass, componentMethod)
-                        }.forEach {
-                            addType(it.first)
-                            companionObject.addFunction(it.second)
+                        }.forEach { (typeSpec, funSpec) ->
+                            addType(typeSpec)
+                            companionObject.addFunction(funSpec)
                         }
 
                         addType(companionObject.build())
@@ -79,19 +88,18 @@ class TransformUnion {
 
     private fun subclassBuilderFor(
         classForTypeName: String,
-        it: TypeMirror,
+        typeMirror: TypeMirror,
         unionClassName: ClassName,
         currentClass: ClassName
-    ): TypeSpec.Builder {
-        return TypeSpec.classBuilder(classForTypeName)
-            .addModifiers(KModifier.PRIVATE)
-            .primaryConstructor(
-                FunSpec.constructorBuilder()
-                    .addParameter(VALUE, it.asTypeName()).build()
-            )
-            .superclass(unionClassName.parameterizedBy(currentClass))
-            .addSuperclassConstructorParameter(VALUE, it)
-    }
+    ): TypeSpec.Builder = TypeSpec.classBuilder(classForTypeName)
+        .addModifiers(KModifier.PRIVATE)
+        .primaryConstructor(
+            FunSpec.constructorBuilder()
+                .addParameter(VALUE, typeMirror.asTypeName())
+                .build()
+        )
+        .superclass(unionClassName.parameterizedBy(currentClass))
+        .addSuperclassConstructorParameter(VALUE, typeMirror)
 
 
     private fun companionMethodBuilderFor(
@@ -99,9 +107,8 @@ class TransformUnion {
         typeName: String,
         className: String,
         unionName: String
-    ): FunSpec.Builder {
-        return FunSpec.builder(typeName).addParameter(ParameterSpec.builder(VALUE, type).build())
-            .addStatement(CodeBlock.of("return $unionName.$className($VALUE) as $unionName<$typeName>").toString())
-    }
+    ): FunSpec.Builder = FunSpec.builder(typeName)
+        .addParameter(ParameterSpec.builder(VALUE, type).build())
+        .addStatement(CodeBlock.of("return $unionName.$className($VALUE) as $unionName<$typeName>").toString())
 
 }

@@ -6,6 +6,12 @@
       <module name="lotus.lambda.tester.test" target="1.8" />
       <module name="lotus.lambda.unikons.main" target="1.8" />
       <module name="lotus.lambda.unikons.test" target="1.8" />
+      <module name="unikons.example.main" target="1.8" />
+      <module name="unikons.example.test" target="1.8" />
+      <module name="unikons.main" target="1.8" />
+      <module name="unikons.test" target="1.8" />
+      <module name="unikons.unikons.main" target="1.8" />
+      <module name="unikons.unikons.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
