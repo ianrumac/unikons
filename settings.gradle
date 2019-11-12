@@ -1,3 +1,2 @@
-rootProject.name = 'unikons'
-include 'unikons_test'
-
+include ':unikons'
+include ':example'
