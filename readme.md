@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![](https://jitpack.io/v/lotuslambda/unikons.svg)](https://jitpack.io/#lotuslambda/unikons/0.2.1-alpha)
+[![](https://jitpack.io/v/lotuslambda/unikons.svg)](https://jitpack.io/#lotuslambda/unikons/0.3)
 
  
 
@@ -42,8 +42,8 @@ Getting a value from the union is as simple as calling `.value`
 Installing:
 
 ```groovy
-    implementation 'com.github.lotuslambda:0.2.1-alpha'
-    annotationProcessor 'com.github.lotuslambda:unikons:0.2.1-alpha'
-    kapt 'com.github.lotuslambda:unikons:0.2.1-alpha'
+    implementation 'com.github.lotuslambda:0.3'
+    annotationProcessor 'com.github.lotuslambda:unikons:0.3'
+    kapt 'com.github.lotuslambda:unikons:0.3'
 
 ```
