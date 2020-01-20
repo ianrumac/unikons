@@ -8,6 +8,6 @@ class FooTest {
     fun foo() {
         FooUnion.Bar(Bar())
         FooUnion.Double(1.2)
+        FooUnion.String("Test")
     }
-
 }
