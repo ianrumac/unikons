@@ -77,7 +77,7 @@ class TransformUnion {
                                 ).build()
 
                                 val generatedSubclass = subclassBuilderFor(
-                                    classForTypeName = nameAsUnionClass,
+                                    classForTypeName = name,
                                     unionClassName = unionClassName,
                                     currentClass = typeInUnion
                                 ).build()
