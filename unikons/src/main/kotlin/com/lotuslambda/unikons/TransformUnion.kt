@@ -33,7 +33,6 @@ class TransformUnion {
         val union = element.getAnnotation(Union::class.java)
         val unionName = "${element.simpleName}Union"
         val unionClassName = ClassName(packageOf, unionName)
-        val generic = TypeVariableName("UnionizedType")
 
         //way to access elements of annotation if they're a Class/K<Class>
 
@@ -47,18 +46,11 @@ class TransformUnion {
             .addType(
                 TypeSpec
                     .classBuilder(unionClassName)
-                    .addTypeVariable(generic)
                     .primaryConstructor(
                         FunSpec.constructorBuilder()
-                            .addParameter(VALUE, generic)
                             .build()
                     )
                     .addModifiers(KModifier.SEALED)
-                    .addProperty(
-                        PropertySpec.builder(VALUE, generic)
-                            .initializer(VALUE)
-                            .build()
-                    )
                     .apply {
                         //holds creation methods
                         val companionObject = TypeSpec.companionObjectBuilder()
@@ -72,7 +64,6 @@ class TransformUnion {
                                 val companionMethod = companionMethodBuilderFor(
                                     type = typeInUnion,
                                     typeName = name,
-                                    className = nameAsUnionClass,
                                     unionName = unionName
                                 ).build()
 
@@ -104,16 +95,13 @@ class TransformUnion {
                 .addParameter(VALUE, currentClass)
                 .build()
         )
-        .superclass(unionClassName.parameterizedBy(currentClass))
-        .addSuperclassConstructorParameter(VALUE, currentClass)
+        .superclass(unionClassName)
 
     private fun companionMethodBuilderFor(
         type: ClassName,
         typeName: String,
-        className: String,
         unionName: String
     ): FunSpec.Builder = FunSpec.builder(typeName)
         .addParameter(ParameterSpec.builder(VALUE, type).build())
-        .addStatement(CodeBlock.of("return $unionName.$className($VALUE) as $unionName<$typeName>").toString())
-
+        .addStatement(CodeBlock.of("return $unionName.$typeName($VALUE)").toString())
 }
