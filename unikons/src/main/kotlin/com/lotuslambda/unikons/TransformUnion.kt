@@ -1,8 +1,6 @@
 package com.lotuslambda.unikons
 
 import com.squareup.kotlinpoet.*
-import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
-import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.element.Element
 import javax.lang.model.type.MirroredTypesException
 import javax.lang.model.type.TypeMirror
@@ -93,6 +91,11 @@ class TransformUnion {
         .primaryConstructor(
             FunSpec.constructorBuilder()
                 .addParameter(VALUE, currentClass)
+                .build()
+        )
+        .addProperty(
+            PropertySpec.builder(VALUE, currentClass)
+                .initializer(VALUE)
                 .build()
         )
         .superclass(unionClassName)
